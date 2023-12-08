@@ -1,0 +1,16 @@
+﻿
+<div class="bar-status">
+    <h4>@User</h4>
+    <div class="@ClassStatus()"></div>
+</div>
+
+@code {
+    [Parameter]
+    public string User { get; set; }
+
+    [Parameter]
+    public string StatusConn { get; set; }
+
+    private string ClassStatus() => (StatusConn == "Connected") ? "status connected" : "status disconnected";
+
+}

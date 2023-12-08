@@ -1,0 +1,23 @@
+﻿@page "/chat"
+@inject NavigationManager Navigation;
+@inject IConfiguration Configuration;
+
+<ChatComponent UserChat="@UserChat" BtnLogOut="(() => LogOut())" AppBaseUri="@Configuration["BaseUri"]" />
+
+
+@code{
+    public string UserChat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserChat = await SecureStorage.Default.GetAsync("user_chat");
+    }
+
+    void LogOut()
+    {
+        SecureStorage.Default.Remove("user_chat");
+        Navigation.NavigateTo("/");
+    }
+   
+}
+

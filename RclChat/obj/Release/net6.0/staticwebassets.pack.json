@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\a.david.fico.neto\\source\\repos\\ServerlessChat\\RclChat\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\RclChat.bundle.scp.css",
+      "PackagePath": "staticwebassets\\RclChat.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\a.david.fico.neto\\source\\repos\\ServerlessChat\\RclChat\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "C:\\Users\\a.david.fico.neto\\source\\repos\\ServerlessChat\\RclChat\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.RclChat.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.build.RclChat.props",
+      "PackagePath": "build\\RclChat.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.RclChat.props",
+      "PackagePath": "buildMultiTargeting\\RclChat.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildTransitive.RclChat.props",
+      "PackagePath": "buildTransitive\\RclChat.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,20 @@
+.status[b-kwi26bcsxx] {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+}
+
+.connected[b-kwi26bcsxx] {
+    background-color: #00ff21;
+}
+
+.disconnected[b-kwi26bcsxx] {
+    background-color: #d9d9d9;
+}
+
+.bar-status[b-kwi26bcsxx] {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

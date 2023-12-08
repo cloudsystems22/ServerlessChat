@@ -1,0 +1,1 @@
+C:\Users\a.david.fico.neto\source\repos\ServerlessChat\MauiAppChat\MauiAppChat.csproj;x64

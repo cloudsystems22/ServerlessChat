@@ -1,0 +1,26 @@
+﻿@page "/"
+@inject ILocalStorageService _localstorage;
+@inject NavigationManager Navigation;
+
+<UserComponent BtnLogIn="(async(string user) => { await Login(user); })" />
+
+@code {
+    public string? UserChat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserChat = await _localstorage.GetItemAsStringAsync("user_chat");
+        if (!string.IsNullOrEmpty(UserChat))
+            Navigation.NavigateTo("chat");
+
+    }
+
+    async Task Login(string user)
+    {
+        UserChat = user;
+        await _localstorage.SetItemAsync("user_chat", UserChat);
+        if (!string.IsNullOrEmpty(UserChat))
+            Navigation.NavigateTo("chat");
+    }
+
+}

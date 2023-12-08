@@ -1,0 +1,21 @@
+﻿@page "/chat"
+@inject ILocalStorageService _localstorage;
+@inject NavigationManager Navigation;
+@inject IConfiguration Configuration;
+
+<ChatComponent UserChat="@UserChat" BtnLogOut="(async() => await LogOut())" AppBaseUri="@Configuration["BaseUri"]" />
+
+@code{
+    public string? UserChat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserChat = await _localstorage.GetItemAsStringAsync("user_chat");
+    }
+
+    async Task LogOut()
+    {
+        await _localstorage.RemoveItemAsync("user_chat");
+        Navigation.NavigateTo("/");
+    }
+}

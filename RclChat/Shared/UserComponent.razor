@@ -1,0 +1,26 @@
+﻿<h3>Login Usuário</h3>
+
+<div>
+    <div class="margin-div">
+        <input type="text" @bind="InputUser" @bind:event="oninput" class="input-login" />
+    </div>
+    <div class="margin-div">
+        <button @onclick="@(() => { BtnLogIn.Invoke(InputUser); })"
+                class="@Class"
+                disabled="@Disabled">
+            Entrar
+        </button>
+    </div>
+</div>
+
+
+@code {
+    public string? InputUser { get; set; }
+
+    public string Class => (string.IsNullOrEmpty(InputUser)) ? "btn-login-desabled" : "btn-login";
+
+    public bool Disabled => (string.IsNullOrEmpty(InputUser));
+
+    [Parameter]
+    public Func<string, Task> BtnLogIn { get; set; }
+}

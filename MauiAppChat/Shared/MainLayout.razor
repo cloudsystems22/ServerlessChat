@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation;
+
+<div class="page">
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+
+	<main>
+		<div class="top-row px-4">
+			<a href="" @onclick="LogOut" disabled="@(string.IsNullOrEmpty(User))">Sair</a>
+		</div>
+
+		<article class="content px-4">
+			@Body
+		</article>
+	</main>
+</div>
+
+@code {
+	private string? User { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		User = await SecureStorage.Default.GetAsync("user_chat");
+	}
+
+	void LogOut()
+	{
+		SecureStorage.Default.Remove("user_chat");
+		Navigation.NavigateTo("/");
+	}
+}

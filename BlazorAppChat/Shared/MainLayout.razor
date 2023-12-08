@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@inject ILocalStorageService _localstorage;
+@inject NavigationManager Navigation;
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            @* <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a> *@
+            <a href="" @onclick="LogOut" disabled="@(string.IsNullOrEmpty(User))">Sair</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code{
+    private string? User { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await _localstorage.GetItemAsStringAsync("user_chat");
+    }
+
+    async Task LogOut()
+    {
+        await _localstorage.RemoveItemAsync("user_chat");
+        Navigation.NavigateTo("/");
+    }
+}

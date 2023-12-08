@@ -1,0 +1,23 @@
+﻿@page "/"
+@inject NavigationManager Navigation;
+
+<UserComponent BtnLogIn="(async(string user) => { await Login(user); })" />
+
+@code {
+    public string? UserChat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserChat = await SecureStorage.Default.GetAsync("user_chat");
+        if (!string.IsNullOrEmpty(UserChat))
+            Navigation.NavigateTo("chat");
+    }
+
+    async Task Login(string user)
+    {
+        UserChat = user;
+        await SecureStorage.Default.SetAsync("user_chat", UserChat);
+        if (!string.IsNullOrEmpty(UserChat))
+            Navigation.NavigateTo("chat");
+    }
+}

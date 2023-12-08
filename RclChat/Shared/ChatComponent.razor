@@ -1,0 +1,103 @@
+﻿@using System.Text.Json;
+@using System.Text;
+
+<StatusComponent User="@UserChat" StatusConn="@(hubConnection.State.ToString())" />
+
+<div class="container-chat-page">
+    <div class="messages-list">
+        @foreach (var message in messages)
+        {
+            if (message.Name == UserChat)
+            {
+                <div class="box-message-received">
+                    <div>
+                        @message.Message
+                        <span>@message.SendAt.ToString("HH:mm")</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="box-message-send">
+                    <div>
+                        @message.Message
+                        <span>@message.SendAt.ToString("HH:mm")</span>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+    <hr />
+    <div class="div-message">
+        <div class="div-input-message">
+            <textarea @bind="messageInput" placeholder="Mensagens..."></textarea>
+        </div>
+        <div class="div-buttom-send">
+            <button @onclick="SendAsync" disabled="@(!IsConnected)">>></button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? UserChat { get; set; }
+
+    [Parameter]
+    public Action BtnLogOut { get; set; }
+
+    [Parameter]
+    public string AppBaseUri { get; set; }
+
+    private HubConnection hubConnection;
+    private List<ClientMessage> messages = new List<ClientMessage>();
+    private string messageInput;
+    private readonly HttpClient _httpClient = new HttpClient();
+    private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions();
+
+    // private readonly string functionAppBaseUri = "http://localhost:7187/api/";
+
+    protected override async Task OnInitializedAsync() 
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(AppBaseUri)
+            .Build();
+
+        Connect();
+
+        await hubConnection.StartAsync();
+    }
+
+    async Task SendAsync()
+    {
+
+        var msg = new ClientMessage
+            {
+                Name = UserChat!,
+                Message = messageInput,
+                SendAt = DateTime.Now
+            };
+
+        string json = JsonSerializer.Serialize<ClientMessage>(msg, _serializerOptions);
+        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        await _httpClient.PostAsync($"{AppBaseUri}messages", content); // post to the function app
+        messageInput = string.Empty;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    void Connect()
+    {
+        hubConnection.On<ClientMessage>("clientMessage", (clientMessage) =>
+        {
+            messages.Add(clientMessage);
+            InvokeAsync(StateHasChanged);
+        });
+    }
+
+    
+}
